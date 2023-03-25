@@ -1,0 +1,113 @@
+ROS FUNDAMENTAL TOPICS
+
+
+
+ROS graph: a network of ROS 2 elements processing data together at one time.
+	encompasses all executable and the connections between them if you were
+		to map them all out and visualize them
+		
+Node: Responsible for a single purpose. 
+	Should send and receive data via topics, services, actions, or parameters
+	full robotic system uses many node in concert.
+	executable contains one or more
+	
+Topics: bus for nodes to exchange messages
+	Nodes may publish data to any number of topic 
+	Node can simultaneously have subscriptions to any number of topics
+	One of the main ways data is moved between nodes
+	
+Services: call-and-response model/ service(server) only provides data when called by client
+	can be many clients
+	only one server
+	
+Parameter: configuration value of a node
+	can store as integers, floats, booleans, strings, and lists
+	nodes maintain own parameters
+	configure at startup and runtime
+	tied to lifetime of node
+	
+Actions: use a client-server model. "Action client" sends goal to "action server"
+	consist of goal, feedback, and a result
+	goal service begins action
+	feedback is sent to client until finished through feedback topic
+	once done, sends result through result service
+	
+	result service begins feedback sending?
+	Long running tasks
+	can be cancelled
+	built on topics and services
+	
+Launchfiles: used to run many objects at once (likely used towards end) 
+	are made with python files
+*****************************************************************************************
+
+
+ROS making Packages
+
+Package: A package can be considered a container for your ROS2 code
+	C++ Requires CMakeLists.txt and a package.xml
+	Python Requires setup.py, package.xml, resource/my_package
+	python vs cmake is ament_cmake vs ament_python
+	--create package: 
+		ros2 pkg create --build-type ament_cmake [--node-name <node_name>] <package_name>
+	--build specific packages: 
+		colcon build --packages-select <package_name>
+	--source ROS2 installation (needed for running newly build packages) (run in ws): 
+		. install/local_setup.bash
+	--use package: 
+		ros2 run my_package my_node
+	
+	
+	
+	
+	
+*********************************************************************************************
+
+ROS2 Transforms
+
+does brodcasting and listening instead of publishing and subscribing
+
+static: doesn't changed overtime
+	--static tf publisher: publishes a static transform (translations first then rotations) (angles in radians)
+	ros2 run tf2_ros static_transform_publisher <x> <y> <z> <yaw> <pitch> <roll> <parent_frame> <child_frame>
+	
+	
+dynamic: changes overtime
+	if the state puublishes overtime, wihtout a publisher, it will crash
+	--robot_state_publisher: publishes the state of the robot while giving an option to edit the transforms
+		ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot description:="$( xacro <urdf file location>)"
+		use TF and RobotModel in RVIZ
+			RobotModel needs to be subscribed to robot_description
+	--robot joint controll gui
+		ros2 run joint_state_publisher_gui joint_state_publisher_gui
+
+
+
+RVIZ: used for modeling
+	--rviz: rviz2
+	tf and robot_model are used for visualization
+
+		
+*********************************************************************************************
+
+ROS2 Gazebo
+
+<gazebo> tags
+	reference: property for referencing other tags
+		ex: gazebo reference="<tag_name>"
+	<material>Gazebo/Green</material>
+		
+*********************************************************************************************
+
+
+
+
+
+
+
+Mischellaneous
+
+the underlay is the setup.bash file
+
+Quality of Service how fast it wants to output data
+	no agreement means nothing outputs

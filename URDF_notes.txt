@@ -1,0 +1,76 @@
+****************************************
+
+ROS2 urdf files
+
+links: seperate components of the robot
+	if two parts move independently
+	if it makes sense (like removeable components)
+	has a corresponding joint it is connected to
+	have only one parent 
+	can have many parents
+	
+	
+joints: how links relate to each other (joined)
+	determines each rotation in space
+	Joint types: revolute, continues, fixed, prismatic (linear)
+	
+urdf
+	xml declaration
+	contains root tag.
+	in root tags are link and joints
+
+xacro [xml macro] (split files into multiple files and avoid repitition)
+	added through command <robot xmlns: xacro="http://www.ros.org/wiki/xacro">
+	
+	one main file representing robot
+	can include other file
+	included files need a robot tag
+	main file should end as .urdf.xacro
+******************************************
+
+<link> tags
+	<visual>
+		<geometry> (overall shape/ path to 3d mesh)
+		<origin> (offset for the geometry)
+		<material> (color)
+	<collision>: for physics collision
+		<geometry> (overall shape/ path to 3d mesh)
+		<origin> (offset for the geometry)
+	<intertial>
+		<mass>
+		<origin>
+		<inertia>
+
+<joint> tags
+	should contain 
+		<name>: name of joint
+		<type> how it moves
+		<parent> 
+		<child>
+		<origin>
+		<axis> axis of movement
+		limits (upper/lower) 
+
+xacro things
+	properties: set to some value we can reference
+		xacro:property:
+			<x y="<tag-name>">
+				<properties>
+			<\x>
+		this is now defined in scope 
+	mathematical operators: perform math
+		done in brackets ${} (ex. ${pi})
+		uses the value item in the property tag
+	macros: template for a tag
+		<xacro:macro name="<name>" params="<params list>">
+			anything you want to define asa function
+
+		</xacro:macro>
+
+******************************************
+
+example
+	<?xml version="1.0"?>
+	<robot name = "robot">
+		<link>
+		<\link>	
