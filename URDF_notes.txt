@@ -54,6 +54,7 @@ xacro [xml macro] (split files into multiple files and avoid repitition)
 xacro things
 	properties: set to some value we can reference
 		xacro:property:
+			<xacro:property name="<name>" value="value">
 			<x y="<tag-name>">
 				<properties>
 			<\x>
