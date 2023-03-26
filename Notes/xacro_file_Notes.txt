@@ -1,0 +1,59 @@
+
+<link> tags
+	<visual>
+		<geometry> (overall shape/ path to 3d mesh)
+		<origin> (offset for the geometry)
+		<material> (color)
+	<collision>: for physics collision
+		<geometry> (overall shape/ path to 3d mesh)
+		<origin> (offset for the geometry)
+	<intertial>
+		<mass>
+		<origin>
+		<inertia>
+
+<joint> tags
+	should contain 
+		<name>: name of joint
+		<type> how it moves
+		<parent> 
+		<child>
+		<origin>
+		<axis> axis of movement
+		limits (upper/lower) 
+
+xacro things
+	properties: set to some value we can reference
+		xacro:property:
+			<xacro:property name="<name>" value="value">
+			<x y="<tag-name>">
+				<properties>
+			</x>
+		this is now defined in scope 
+	mathematical operators: perform math
+		done in brackets ${} (ex. ${pi})
+		uses the value item in the property tag
+	macros: template for a tag
+		<xacro:macro name="<name>" params="<params list>">
+			anything you want to define asa function
+
+		</xacro:macro>
+
+
+
+<gazebo> tags
+	reference: property for referencing other tags
+		ex: gazebo reference="<tag_name>"
+	<material>Gazebo/Green</material>
+
+	pluggin: used for ROS-Gazebo communcation
+	EX:
+		<pluggin name="gazebo_ros_joint_state_publisher"
+			filename="libgazebo_ros_joint_state_publisher.so">
+			<update_rate>20</update_rate>
+			<joint_name>slider_joint</joint_name>
+			<joint_name>arm_joint</joint_name>
+		</pluggin>
+			This pluggin publishes joint info to ROS
+
+	
